@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagify - Image Compression & Quality Analysis</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🎯 Imagify</h1>
+            <p>Advanced Image Compression & Quality Analysis Tool</p>
+        </header>
+
+        <!-- Main Application -->
+        <main class="main">
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <div class="upload-icon">📁</div>
+                        <h3>Drop your image here or click to browse</h3>
+                        <p>Supports PNG, JPG, WebP • Max size: 10MB</p>
+                        <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden>
+                        <button class="btn btn--primary" id="browseBtn">Browse Files</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Controls Section -->
+            <section class="controls-section hidden" id="controlsSection">
+                <div class="card">
+                    <div class="card__body">
+                        <div class="control-group">
+                            <label for="qualitySlider" class="form-label">
+                                Compression Quality: <span id="qualityValue">75</span>%
+                            </label>
+                            <div class="slider-container">
+                                <input type="range" id="qualitySlider" min="0" max="100" value="75" class="quality-slider">
+                                <div class="slider-labels">
+                                    <span>Low (0)</span>
+                                    <span>Medium (50)</span>
+                                    <span>High (100)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="format-selector">
+                            <label class="form-label">Output Format:</label>
+                            <div class="format-options">
+                                <label class="format-option">
+                                    <input type="radio" name="format" value="jpeg" checked>
+                                    <span>JPEG</span>
+                                </label>
+                                <label class="format-option">
+                                    <input type="radio" name="format" value="webp">
+                                    <span>WebP</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Image Comparison Section -->
+            <section class="comparison-section hidden" id="comparisonSection">
+                <div class="image-comparison">
+                    <div class="image-panel">
+                        <h4>Original</h4>
+                        <div class="image-container">
+                            <canvas id="originalCanvas"></canvas>
+                        </div>
+                        <div class="image-info">
+                            <span id="originalSize">-</span>
+                        </div>
+                    </div>
+                    
+                    <div class="image-panel">
+                        <h4>Compressed</h4>
+                        <div class="image-container">
+                            <canvas id="compressedCanvas"></canvas>
+                        </div>
+                        <div class="image-info">
+                            <span id="compressedSize">-</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Metrics Dashboard -->
+            <section class="metrics-section hidden" id="metricsSection">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h4>PSNR</h4>
+                            <span class="metric-unit">dB</span>
+                        </div>
+                        <div class="metric-value" id="psnrValue">-</div>
+                        <div class="metric-description">Peak Signal-to-Noise Ratio</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h4>SSIM</h4>
+                            <span class="metric-unit">0-1</span>
+                        </div>
+                        <div class="metric-value" id="ssimValue">-</div>
+                        <div class="metric-description">Structural Similarity Index</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h4>Compression</h4>
+                            <span class="metric-unit">ratio</span>
+                        </div>
+                        <div class="metric-value" id="ratioValue">-</div>
+                        <div class="metric-description">Size Reduction Factor</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h4>Quality Score</h4>
+                            <span class="metric-unit">AI</span>
+                        </div>
+                        <div class="metric-value" id="qualityScore">-</div>
+                        <div class="metric-description">ML Predicted Quality</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Visual Difference Section -->
+            <section class="difference-section hidden" id="differenceSection">
+                <div class="card">
+                    <div class="card__body">
+                        <div class="difference-header">
+                            <h4>Visual Difference Analysis</h4>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="diffToggle">
+                                <span class="toggle-slider"></span>
+                                <span class="toggle-label">Show Difference Map</span>
+                            </label>
+                        </div>
+                        <div class="difference-container hidden" id="differenceContainer">
+                            <div class="difference-image">
+                                <canvas id="differenceCanvas"></canvas>
+                            </div>
+                            <div class="difference-legend">
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #000080;"></div>
+                                    <span>No Difference</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #FFD700;"></div>
+                                    <span>Moderate</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #FF0000;"></div>
+                                    <span>High Difference</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Actions Section -->
+            <section class="actions-section hidden" id="actionsSection">
+                <div class="actions-grid">
+                    <button class="btn btn--primary" id="downloadBtn">
+                        📥 Download Compressed Image
+                    </button>
+                    <button class="btn btn--secondary" id="resetBtn">
+                        🔄 Reset & Upload New
+                    </button>
+                </div>
+            </section>
+
+            <!-- Processing Indicator -->
+            <div class="processing-indicator hidden" id="processingIndicator">
+                <div class="spinner"></div>
+                <span>Processing image...</span>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
