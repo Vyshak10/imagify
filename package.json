@@ -1,0 +1,52 @@
+{
+  "name": "imagify-compression-tool",
+  "version": "1.0.0",
+  "description": "Interactive image compression tool with real-time quality metrics",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "live-server --port=8080",
+    "build": "echo 'No build process required for this static application'"
+  },
+  "keywords": [
+    "image",
+    "compression",
+    "PSNR",
+    "SSIM",
+    "canvas",
+    "javascript",
+    "html5"
+  ],
+  "author": "Imagify Development Team",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "features": [
+    "Real-time image compression",
+    "PSNR quality metric calculation",
+    "SSIM structural similarity calculation",
+    "Compression ratio analysis",
+    "Heat map difference visualization",
+    "Drag and drop file upload",
+    "Responsive design",
+    "Mobile optimization"
+  ],
+  "supported_formats": [
+    "JPEG",
+    "PNG",
+    "WebP"
+  ],
+  "browser_requirements": {
+    "chrome": ">=60",
+    "firefox": ">=55",
+    "safari": ">=12",
+    "edge": ">=79"
+  },
+  "file_structure": {
+    "index.html": "Main HTML file with application structure",
+    "style.css": "CSS styles with responsive design",
+    "app.js": "JavaScript application logic and image processing",
+    "README.md": "Installation and usage instructions"
+  }
+}

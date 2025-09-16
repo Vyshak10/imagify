@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagify - Image Compression Tool</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">📷</div>
+                <h1>Imagify</h1>
+            </div>
+            <p class="subtitle">Intelligent Image Compression with Real-time Quality Analysis</p>
+        </header>
+
+        <!-- Upload Area -->
+        <div class="upload-section" id="uploadSection">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📁</div>
+                <h3>Drop your image here</h3>
+                <p>or <button class="btn btn--primary" id="fileSelectBtn">Choose File</button></p>
+                <p class="upload-info">Supports JPG, PNG, WebP • Max 10MB</p>
+                <input type="file" id="fileInput" accept="image/*" hidden>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent" style="display: none;">
+            <!-- Image Comparison Section -->
+            <div class="image-section">
+                <div class="image-container">
+                    <div class="image-header">
+                        <h3>Original Image</h3>
+                        <span class="file-size" id="originalSize">-</span>
+                    </div>
+                    <div class="image-wrapper">
+                        <canvas id="originalCanvas"></canvas>
+                    </div>
+                </div>
+                
+                <div class="image-container">
+                    <div class="image-header">
+                        <h3>Compressed Image</h3>
+                        <span class="file-size" id="compressedSize">-</span>
+                    </div>
+                    <div class="image-wrapper">
+                        <canvas id="compressedCanvas"></canvas>
+                        <div class="heat-map-overlay" id="heatMapOverlay" style="display: none;">
+                            <canvas id="heatMapCanvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls Section -->
+            <div class="controls-section">
+                <div class="control-group">
+                    <label class="form-label">Compression Quality</label>
+                    <div class="slider-container">
+                        <input type="range" id="qualitySlider" min="1" max="100" value="80" class="quality-slider">
+                        <div class="slider-value">
+                            <span id="qualityValue">80</span>%
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-row">
+                    <div class="control-group">
+                        <label class="form-label" for="maxWidth">Max Width (px)</label>
+                        <input type="number" id="maxWidth" class="form-control" placeholder="Auto">
+                    </div>
+                    <div class="control-group">
+                        <label class="form-label" for="maxHeight">Max Height (px)</label>
+                        <input type="number" id="maxHeight" class="form-control" placeholder="Auto">
+                    </div>
+                </div>
+
+                <div class="control-buttons">
+                    <button class="btn btn--secondary" id="resetBtn">Reset to Original</button>
+                    <button class="btn btn--outline" id="heatMapToggle">Show Heat Map</button>
+                    <button class="btn btn--primary" id="downloadBtn">Download Compressed</button>
+                </div>
+            </div>
+
+            <!-- Metrics Section -->
+            <div class="metrics-section">
+                <h3>Quality Metrics</h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-label">PSNR</span>
+                            <span class="metric-tooltip" title="Peak Signal-to-Noise Ratio: Higher values indicate better quality preservation">ⓘ</span>
+                        </div>
+                        <div class="metric-value" id="psnrValue">-</div>
+                        <div class="metric-unit">dB</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-label">SSIM</span>
+                            <span class="metric-tooltip" title="Structural Similarity Index: Values closer to 1.0 indicate better structural preservation">ⓘ</span>
+                        </div>
+                        <div class="metric-value" id="ssimValue">-</div>
+                        <div class="metric-unit">index (0-1)</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-label">Compression Ratio</span>
+                            <span class="metric-tooltip" title="Original size divided by compressed size">ⓘ</span>
+                        </div>
+                        <div class="metric-value" id="compressionRatio">-</div>
+                        <div class="metric-unit">:1</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-label">Size Reduction</span>
+                            <span class="metric-tooltip" title="Percentage reduction in file size">ⓘ</span>
+                        </div>
+                        <div class="metric-value" id="sizeReduction">-</div>
+                        <div class="metric-unit">%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div class="loading" id="loadingIndicator" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p>Processing image...</p>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" id="errorMessage" style="display: none;">
+            <span class="error-icon">⚠️</span>
+            <span id="errorText"></span>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
